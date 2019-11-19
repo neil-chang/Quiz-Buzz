@@ -22,6 +22,12 @@ class App extends Component {
     url: ""
   };
 
+  urls = [
+    "https://www.buzzfeed.com/ajs023/whats-your-2010s-song-250dv4dgms",
+    "https://www.buzzfeed.com/evelinamedina/do-you-remember-lyrics-from-high-school-musical?origin=btm-fd",
+    "https://www.buzzfeed.com/alliehayes/single-or-taken-based-on-rom-com-opnions",
+    "https://www.buzzfeed.com/morganmurrell/random-trivia-quiz-11-7-19"
+  ];
   getContents = () => {
     if (this.state.url === "") {
       alert("Must provide a URL!");
@@ -184,11 +190,15 @@ class App extends Component {
       return { curQuestion: prevState.curQuestion - 1 };
     });
   };
+  randomUrl = () => {
+    let index = Math.floor(Math.random() * this.urls.length);
+    this.setState({ url: this.urls[index] });
+  };
 
   urlChange = e => this.setState({ url: e.target.value });
 
   render() {
-    const { getContents, qChange, questionBack, urlChange } = this;
+    const { getContents, qChange, questionBack, randomUrl, urlChange } = this;
     const {
       answers,
       curQuestion,
@@ -203,12 +213,15 @@ class App extends Component {
         <div className="app-container">
           {/* WELCOME SCREEN */}
           {quizQuestions.length < 1 && (
-            <WelcomeScreen
-              getContents={getContents}
-              loading={loading}
-              url={url}
-              urlChange={urlChange}
-            />
+            <div>
+              <WelcomeScreen
+                getContents={getContents}
+                loading={loading}
+                randomUrl={randomUrl}
+                url={url}
+                urlChange={urlChange}
+              />
+            </div>
           )}
 
           {/* QUETIONS SCREENS */}
